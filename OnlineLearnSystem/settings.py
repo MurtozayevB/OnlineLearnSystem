@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-2m&_$q3++1&z^1-f+s@_u$5!&-l3x#(27&2ed5u55sl+-xj!v^
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL='authentication.Student'
 
 
 # Application definition
@@ -37,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
+    'authentication',
+    'apps'
 ]
 
 MIDDLEWARE = [
@@ -122,3 +129,23 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'OnlineLearn',
+    'DESCRIPTION': 'Expenses',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True
+
+    # OTHER SETTINGS
+}

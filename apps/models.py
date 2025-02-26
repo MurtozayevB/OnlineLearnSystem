@@ -16,7 +16,7 @@ from django.utils.text import slugify
 
 class Device(Model):
     device_id = CharField(max_length=255)
-    student = ForeignKey('authentication.Student', on_delete=True, related_name='devices')
+    student = ForeignKey('authentication.Student', on_delete=CASCADE, related_name='devices')
     is_active = BooleanField(default=True)
 
     def __str__(self):
@@ -43,14 +43,14 @@ class Task(Model):
     description = TextField(blank=True)
     type = CharField(max_length=255, default=TypeChoices.medium)
     point = SmallIntegerField(default=1)
-    lesson = ForeignKey('apps.Lesson', on_delete=True, related_name='tasks')
+    lesson = ForeignKey('apps.Lesson', on_delete=CASCADE, related_name='tasks')
 
 
 class History(Model):
     is_correct = BooleanField(default=False)
     created_at = DateTimeField(auto_created=True)
     task = ForeignKey('apps.Task', on_delete=CASCADE, related_name='history')
-    student = ForeignKey('authentication.Student', on_delete=SET_NULL, related_name='history')
+    student = ForeignKey('authentication.Student', on_delete=SET_NULL,null=True, related_name='history')
 
 class Choice(Model):
     choice = CharField(max_length=255)
@@ -63,7 +63,7 @@ class Choice(Model):
 class StudentDaily(Model):
     student = ForeignKey('authentication.Student', on_delete=CASCADE, related_name='daily_student')
     task = ForeignKey(Task, on_delete=CASCADE, related_name='daily_task')
-
+    completed_at = DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.student.first_name
 

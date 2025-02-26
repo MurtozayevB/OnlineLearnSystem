@@ -52,7 +52,6 @@ class Student(AbstractUser):
 
     #     custom fields
     image = ImageField(null=True, blank=True, upload_to='media/images/student/avatar')
-    strike = CharField(null=True, blank=True, max_length=255)
     point = SmallIntegerField(null=True, blank=True)
     last_theme=ForeignKey('apps.Lesson',on_delete=SET_NULL, null=True, blank=True)
     coin = IntegerField(null=True, blank=True)
